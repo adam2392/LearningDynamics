@@ -15,11 +15,13 @@ else
   traj_fig                     = figure('Name', 'Traj (2D): True Vs. Learned', 'NumberTitle', 'off', 'Position', ...
   [scrsz(3)*1/8 + scrsz(3) * 5/48, scrsz(4)*1/8, scrsz(3)*3/4, scrsz(4)*3/4]);
 end
-if plot_info.for_PNAS
-  color_output                 = construct_color_items(sys_info.K, obs_info.T_L, plot_info.coarse_time_vec);
-else
-  color_output                 = construct_color_items(sys_info.K, obs_info.T_L, time_vec);
-end
+% if plot_info.for_PNAS
+%   color_output                 = construct_color_items(sys_info.K, obs_info.T_L, plot_info.coarse_time_vec);
+% else
+%   color_output                 = construct_color_items(sys_info.K, obs_info.T_L, time_vec);
+% end
+color_output                 = construct_color_items(sys_info.K, obs_info.T_L, time_vec);
+
 cmap                           = color_output.cmap;
 c_vecs                         = color_output.c_vecs;
 clabels                        = color_output.clabels;
