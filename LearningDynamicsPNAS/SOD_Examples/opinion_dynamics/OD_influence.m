@@ -1,18 +1,35 @@
 function influence = OD_influence(r, type)
 % influence = OD_influence(r, type)
-
+% r = distance vector
+% type = type ot the interaction kernel
+% influence = the interaction kernel \phi: R_+ -> R
+% 
 % (c) M. Zhong (JHU)
 
 persistent f_influence
 
+% interaction kernel in a support of a line
+% influence = zeros(size(r));
+% cutoff    = 1/sqrt(2);
+% support   = 1;
+
+% interaction kernel on a circle
 influence = zeros(size(r));
-cutoff    = 1/sqrt(2);
-support   = 1;
+cutoff = pi/sqrt(2);
+support = 2*pi;
+
 switch type
-  case 1
+  case 1 
+    % 1-D interactions on a line
     ind            = 0 < r & r < cutoff;
     influence(ind) = 1;
     ind            = cutoff <= r & r < support;
+    influence(ind) = 0.1;
+    
+    % 1-D interactions on a circle
+    ind            = (0 < r & r < cutoff) & ((support - cutoff) < r & r < support);  % between (0, cutoff) and (2pi - cutoff, 2pi)
+    influence(ind) = 1;
+    ind            = (cutoff <= r & r < support - cutoff);  % between (cutoff, 2pi - cutoff)
     influence(ind) = 0.1;
   case 2
     ind            = 0 < r & r < cutoff;

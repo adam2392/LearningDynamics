@@ -13,6 +13,10 @@ switch d
                 a                 = domain(1);
                 b                 = domain(2);
                 point_dist        = (b - a) * rand(1, N) + a;
+%             case 'circle-geo'
+%                 a = domain(1);
+%                 b = domain(2);
+%                 point_dist = (b - a) * rand(1, N) + a;
             otherwise
                 error('');
         end
