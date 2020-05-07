@@ -17,6 +17,7 @@ sys_info.RE             = [];                                                   
 sys_info.has_noise      = false;                                                                    % no stochastic noise
 sys_info.mu0            = @() OD_init_config(sys_info.d, sys_info.N, 1);                            % distribution of initial conditions
 sys_info.T_f            = 30;                                                                       % final time the system will reach steady state
+sys_info.radius         = 1;
 
 % ODE solver
 solver_info.time_span   = [0, sys_info.T_f];                                                        % put it into the time_span vector, always starting from 0
