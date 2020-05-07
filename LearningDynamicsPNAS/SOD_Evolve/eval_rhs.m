@@ -13,6 +13,15 @@ function rhs = eval_rhs(y, sys_info)
 % prepare x, v, xi and pdist_mat (contains the pairwise distance, |x_i - x_i'|
 state_vars                         = partition_sys_var(y, sys_info);
 x                                  = state_vars.x;
+
+% modifying x to account for movement across ends of circle at 0 and 2*pi
+for i = find(x >= 2*pi)
+  x(i)                  = mod(x(i), 2*pi);
+end
+for i = find(x < 0)
+  x(i)                  = 2*pi + x(i);
+end
+
 v                                  = state_vars.v;
 xi                                 = state_vars.xi;
 pdist_mat                          = sqrt(abs(sqdist_mod(x)));                                      % calculate the pairwise distance (using normal Euclidean distance)
