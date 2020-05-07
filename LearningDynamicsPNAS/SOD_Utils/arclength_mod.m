@@ -35,7 +35,20 @@ function a = arclength_mod(p, q)
         end
         
     elseif d == 2 % 2D case in R3
-        
+        if nargin == 1
+            for i = 1:pn
+               for j = 1:pn
+                   a(i,j) = min( acos( cos(p(i,1) - p(j,1))*cos(p(i,2))*cos(p(j,2)) + sin(p(i,2))*sin(p(j,2)) ), 2*pi - acos( cos(p(i,1) - p(j,1))*cos(p(i,2))*cos(p(j,2)) + sin(p(i,2))*sin(p(j,2)) ) );
+               end
+            end
+        end
+        if nargin == 2
+            for i = 1:pn
+               for j = 1:qn
+                   a(i,j) = min( acos( cos(p(i,1) - q(j,1))*cos(p(i,2))*cos(q(j,2)) + sin(p(i,2))*sin(q(j,2)) ), 2*pi - acos( cos(p(i,1) - q(j,1))*cos(p(i,2))*cos(q(j,2)) + sin(p(i,2))*sin(q(j,2)) ) );
+               end
+            end
+        end
     end
 
 return
