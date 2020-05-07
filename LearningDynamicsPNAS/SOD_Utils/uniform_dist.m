@@ -6,7 +6,7 @@ function point_dist = uniform_dist(d, N, type, domain)
 % Postdoc Research at JHU
 
 %
-switch d
+switch d % dimension
     case 1
         switch type
             case 'line'
@@ -77,7 +77,8 @@ switch d
             case 'sphere_surface'
                 R                = domain(1);
                 phi              = 2 * pi * rand(1, N);
-                theta            = acos(2 * rand(1, N) - 1);
+                % theta            = acos(2 * rand(1, N) - 1);
+                theta            = pi * rand(1, N);
                 point_dist       = zeros(3, N);
                 point_dist(1, :) = R * sin(theta) .* cos(phi);
                 point_dist(2, :) = R * sin(theta) .* sin(phi);
