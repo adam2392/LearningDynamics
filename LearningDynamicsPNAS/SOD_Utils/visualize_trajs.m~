@@ -60,8 +60,7 @@ fprintf('\n  sup-norm on [%10.4e,%10.4e] = %10.4e.', obs_info.time_vec(1), obs_i
 fprintf('\n  sup-norm on [%10.4e,%10.4e] = %10.4e.', obs_info.T_L,         plot_info.solver_info.time_span(2), result.trajErrfut);
 
 
-% comment out if not doing simulation on circular manifold
-RADIUS = sys_info.radius;
+RADIUS = 1;
 sys_info.d = 2;  % convert system dimension to 2 - hack
 % loop through all trajs
 for ind = 1 : length(trajs)

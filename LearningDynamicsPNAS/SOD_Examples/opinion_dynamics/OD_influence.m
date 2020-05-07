@@ -6,7 +6,7 @@ function influence = OD_influence(r, type)
 % 
 % (c) M. Zhong (JHU)
 
-persistent f_influence
+% persistent f_influence
 
 % interaction kernel in a support of a line
 % influence = zeros(size(r));
@@ -15,22 +15,25 @@ persistent f_influence
 
 % interaction kernel on a circle
 influence = zeros(size(r));
-cutoff = pi/sqrt(2);
+cutoff = pi/2;
+second_cutoff = pi/sqrt(2);
 support = 2*pi;
 
 switch type
   case 1 
     % 1-D interactions on a line
-    ind            = 0 < r & r < cutoff;
-    influence(ind) = 1;
-    ind            = cutoff <= r & r < support;
-    influence(ind) = 0.1;
+%     ind            = 0 < r & r < cutoff;
+%     influence(ind) = 1;
+%     ind            = cutoff <= r & r < support;
+%     influence(ind) = 0.1;
     
     % 1-D interactions on a circle
-    ind            = (0 < r & r < cutoff) & ((support - cutoff) < r & r < support);  % between (0, cutoff) and (2pi - cutoff, 2pi)
+    ind            = (0 < r & r < cutoff) | ((support - cutoff) < r & r < support);  % between (0, cutoff) and (2pi - cutoff, 2pi)
     influence(ind) = 1;
-    ind            = (cutoff <= r & r < support - cutoff);  % between (cutoff, 2pi - cutoff)
+    ind            = (cutoff < r & r < second_cutoff) | (support - second_cutoff < r & r < support - cutoff);         % between (cutoff, 2pi - cutoff)
     influence(ind) = 0.1;
+%     ind            = (second_cutoff <= r & r < support - second_cutoff);  % between (cutoff, 2pi - cutoff)
+%     influence(ind) = 0.1;
   case 2
     ind            = 0 < r & r < cutoff;
     influence(ind) = 1;

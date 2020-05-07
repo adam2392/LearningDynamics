@@ -32,9 +32,8 @@ plot_info.showplottitles           = false;
 plot_info.display_phihat           = false;
 plot_info.display_interpolant      = true;
 plot_info.T_L_marker_size          = plot_info.traj_line_width;
-plot_info.for_PNAS                 = false;
-
-plot_info.line_styles              = {'-', '-.', '--', ':'};
+plot_info.for_PNAS = false;
+plot_info.line_styles              = {'-', '-.', '--', ':'};                                        % traj. line styles
 
 % for learn_info
 solver_type                        = 'pinv';                                                        % use the MATLAB built-in LS solver, for single class case, Phi is never singular (?), so mldivide can do the job
