@@ -18,7 +18,10 @@ xi                                 = state_vars.xi;
 pdist_mat                          = sqrt(abs(sqdist_mod(x)));                                      % calculate the pairwise distance (using normal Euclidean distance)
 
 % evaluate f(t, y) based on the order of the ODE
-if sys_info.ode_order == 1                                                                                                                                                 
+if sys_info.ode_order == 1   
+  if strcmp(sys.info.name, 'OpinionDynamicsDisc')
+      x = mod(x, 2*pi);  % hard-code moduli, if something is traveling in a connected manifold
+  end
   rhs                   = find_collective_change(x, v, xi, pdist_mat, sys_info, 'energy');          % for 1st order system: \dot{x}_i = \sum_{i' = 1}^N \phi^E_{K_i, K_i'}(|x_i - x_i'|)(x_i' - x_i)
 elseif sys_info.ode_order == 2
   rhs                   = zeros(size(y));                                                           % 2nd order contains update to x, v (and possibly xi)
