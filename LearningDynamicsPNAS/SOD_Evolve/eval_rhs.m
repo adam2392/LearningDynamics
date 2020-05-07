@@ -19,7 +19,7 @@ pdist_mat                          = sqrt(abs(sqdist_mod(x)));                  
 
 % evaluate f(t, y) based on the order of the ODE
 if sys_info.ode_order == 1   
-  if strcmp(sys.info.name, 'OpinionDynamicsDisc')
+  if strcmp(sys_info.name, 'OpinionDynamicsDisc')
       x = mod(x, 2*pi);  % hard-code moduli, if something is traveling in a connected manifold
   end
   rhs                   = find_collective_change(x, v, xi, pdist_mat, sys_info, 'energy');          % for 1st order system: \dot{x}_i = \sum_{i' = 1}^N \phi^E_{K_i, K_i'}(|x_i - x_i'|)(x_i' - x_i)

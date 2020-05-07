@@ -29,10 +29,12 @@ time_1                         = time_vec(ind_1);
 time_2                         = time_vec(ind_2);
 y_min                          = zeros(1, length(trajs));
 y_max                          = zeros(1, length(trajs));
+
+% loop through all trajs
 for ind = 1 : length(trajs)
   traj                         = trajs{ind};
-  traj_1                       = traj(:, ind_1);
-  traj_2                       = traj(:, ind_2);
+  traj_1                       = traj(:, ind_1);  % get traj before training time
+  traj_2                       = traj(:, ind_2);  % get traj into testing time
   traj_1s{ind}                 = traj_1;
   traj_2s{ind}                 = traj_2;
   y_min(ind)                   = min(min(traj));

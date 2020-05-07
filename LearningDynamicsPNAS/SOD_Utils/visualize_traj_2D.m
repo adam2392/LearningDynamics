@@ -26,13 +26,16 @@ cmap                           = color_output.cmap;
 c_vecs                         = color_output.c_vecs;
 clabels                        = color_output.clabels;
 cticks                         = color_output.cticks;
+
 % split the trajectories
-X_c1s                          = cell(1, 4);
-X_c2s                          = cell(1, 4);
+X_c1s                          = cell(1, 4);  % coordinate 1
+X_c2s                          = cell(1, 4);  % coordinate 2
 x_min                          = zeros(1, 4);
 x_max                          = zeros(1, 4);
 y_min                          = zeros(1, 4);
 y_max                          = zeros(1, 4);
+
+% go through I.C. w/ trajs
 for ind = 1 : 4
   traj                         = trajs{ind};
   X_c1                         = traj(1 : 2 : end - 1, :);
@@ -59,8 +62,12 @@ switch sys_info.name
     leg_loc                    = 'SouthWest';
   case 'PhototaxisDynamics'
     leg_loc                    = 'NorthWest';
-  otherwise
+  otherwise 
+    leg_loc = 'Best';
 end
+
+plot_info.for_PNAS = false;
+
 for ind = 1 : 4
   subplot(2, 2, ind); 
   X_c1                         = X_c1s{ind};
@@ -102,6 +109,7 @@ for ind = 1 : 4
     end
   end
   scatter(X_c1(:, T_loc), X_c2(:, T_loc), plot_info.T_L_marker_size, 'k', 'filled', 'o');
+  
   l_handle                     = plot(NaN, NaN, ['k' plot_info.line_styles{1}]);                    % dummy lines for legend
   hold off;
   axesHandle                   = gca;  
