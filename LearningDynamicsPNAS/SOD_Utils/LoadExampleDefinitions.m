@@ -32,6 +32,9 @@ plot_info.showplottitles           = false;
 plot_info.display_phihat           = false;
 plot_info.display_interpolant      = true;
 plot_info.T_L_marker_size          = plot_info.traj_line_width;
+plot_info.for_PNAS                 = false;
+
+plot_info.line_styles              = {'-', '-.', '--', ':'};
 
 % for learn_info
 solver_type                        = 'pinv';                                                        % use the MATLAB built-in LS solver, for single class case, Phi is never singular (?), so mldivide can do the job
@@ -60,6 +63,7 @@ total_num_defs                     = length(def_files);
 Examples                           = cell(1, total_num_defs);
 for idx = 1 : total_num_defs
   eval(sprintf('Example = %s();', erase(def_files(idx).name, '.m')));
+  % eval(sprintf('Example = %s();', def_files(idx).name ));
   Example.plot_info                = plot_info;
   Example.solver_info.solver       = solver;
   if ~isfield(Example.solver_info, 'rel_tol')

@@ -15,12 +15,11 @@ else
   traj_fig                     = figure('Name', 'Traj (2D): True Vs. Learned', 'NumberTitle', 'off', 'Position', ...
   [scrsz(3)*1/8 + scrsz(3) * 5/48, scrsz(4)*1/8, scrsz(3)*3/4, scrsz(4)*3/4]);
 end
-% if plot_info.for_PNAS
-%   color_output                 = construct_color_items(sys_info.K, obs_info.T_L, plot_info.coarse_time_vec);
-% else
-%   color_output                 = construct_color_items(sys_info.K, obs_info.T_L, time_vec);
-% end
-color_output                 = construct_color_items(sys_info.K, obs_info.T_L, time_vec);
+if plot_info.for_PNAS
+  color_output                 = construct_color_items(sys_info.K, obs_info.T_L, plot_info.coarse_time_vec);
+else
+  color_output                 = construct_color_items(sys_info.K, obs_info.T_L, time_vec);
+end
 
 cmap                           = color_output.cmap;
 c_vecs                         = color_output.c_vecs;
@@ -70,6 +69,7 @@ for ind = 1 : 4
     m_C1                       = dyn_markers(1 : 2 : end - 1, :);
     m_C2                       = dyn_markers(2 : 2 : end,     :);
   end
+
   the_sys_info                 = sys_info;
   if strcmp(sys_info.name, 'LennardJonesDynamics') || strcmp(sys_info.name, 'LennardJonesDynamicsTruncated')
     if ind == 3 || ind == 4
@@ -83,6 +83,7 @@ for ind = 1 : 4
       agent                    = agents_Ck(agent_ind);
       c1_at_t                  = X_c1(agent, :);
       c2_at_t                  = X_c2(agent, :);
+      
       if plot_info.for_PNAS
         plot(c1_at_t, c2_at_t, 'LineWidth', plot_info.traj_line_width, 'Color', 'k', ...
           'LineStyle', plot_info.line_styles{1});
@@ -99,6 +100,7 @@ for ind = 1 : 4
         end
         if k == 1 && agent_ind == 1, hold on; end
       end
+      
     end
   end
   scatter(X_c1(:, T_loc), X_c2(:, T_loc), plot_info.T_L_marker_size, 'k', 'filled', 'o');
