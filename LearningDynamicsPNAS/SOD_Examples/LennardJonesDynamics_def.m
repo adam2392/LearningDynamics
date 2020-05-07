@@ -15,7 +15,7 @@ sys_info.type_info      = ones(1, sys_info.N);                                  
 sys_info.kappa          = 1;                                                                        % coupling strength term
 sys_info.RE             = [];                                                                       % regulation on collective influence on x
 sys_info.has_noise      = false;                                                                    % no stochastic noise
-sys_info.mu0            = @() LJ_init_config([], sys_info.d, sys_info.N, 2);                        % distribution of initial conditions
+sys_info.mu0            = @() LJ_init_config([], sys_info.d, sys_info.N, 1);                        % distribution of initial conditions, distribution kind = 1
 sys_info.T_f            = 0.5; 
 % the time for integration, t = T_f should be (most likely) for the system to reach steady state
 
