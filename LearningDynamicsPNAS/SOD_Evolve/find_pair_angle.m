@@ -12,7 +12,9 @@ xdiff_dot_v                = the_prod(1 : d : (N - 1) * d + 1, :);
 for d_idx = 2 : d
   xdiff_dot_v              = xdiff_dot_v + the_prod(d_idx : d : (N - 1) * d + d_idx, :);
 end
-pdist_mat                  = sqrt(abs(sqdist_mod(x)));
+% pdist_mat                  = sqrt(abs(sqdist_mod(x)));
+pdist_mat = abs(arclength_mod(x));
+
 pdist_zero                 = pdist_mat == 0;
 v_norm                     = sqrt(sum(v.^0.5));
 vnorm_zero                 = v_norm == 0;

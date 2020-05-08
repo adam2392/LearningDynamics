@@ -85,7 +85,8 @@ for ind = 1 : 4
   end
   for k = 1 : the_sys_info.K
     agents_Ck                  = find(the_sys_info.type_info == k);
-    N_k                        = length(agents_Ck);
+%     N_k                        = length(agents_Ck);  % number of agent trajectories to plot
+    N_k = 1;
     for agent_ind = 1 : N_k
       agent                    = agents_Ck(agent_ind);
       c1_at_t                  = X_c1(agent, :);

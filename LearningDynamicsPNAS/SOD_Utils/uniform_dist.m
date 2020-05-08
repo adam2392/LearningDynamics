@@ -23,9 +23,20 @@ switch d % dimension
     case 2
         switch type
             case 'rectangle'
-                a                = domain(1);
-                b                = domain(2);
-                point_dist       = (b - a) * rand(2, N) + a;
+%                 a                = domain(1);
+%                 b                = domain(2);
+%                 point_dist       = (b - a) * rand(2, N) + a;
+%                 
+                % rectangle is x \in [a, b], y \in [c, d]
+                a = domain(1);
+                b = domain(2);
+                c = domain(3);
+                d = domain(4);
+                
+                % sample first coordinate
+                first_coord = (b - a) * rand(1, N) + a;
+                second_coord = (d - c) * rand(1, N) + c;
+                point_dist = cat(1, first_coord, second_coord);
             case 'disk'
                 R                = domain(1);
                 theta            = 2 * pi * rand(1, N);

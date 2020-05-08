@@ -24,13 +24,21 @@ end
 
 v                                  = state_vars.v;
 xi                                 = state_vars.xi;
-pdist_mat                          = sqrt(abs(sqdist_mod(x)));                                      % calculate the pairwise distance (using normal Euclidean distance)
-
+% pdist_mat                          = sqrt(abs(sqdist_mod(x)));                                      % calculate the pairwise distance (using normal Euclidean distance)
+pdist_mat                          = arclength_mod(x);
 % evaluate f(t, y) based on the order of the ODE
+
+% if we are using a radius-based spherical manifold
+if sys_info.radius ~= -1
+    if sys_info.d == 1
+        x = mod(x, 2*pi);  % hard-code moduli, if something is traveling in a connected manifold
+    elseif sys_info.d == 2
+        x(1:2:end) = mod(x(1:2:end), 2*pi);  % hard-code moduli, if something is traveling in a connected manifold
+        x(2:2:end) = mod(x(2:2:end), pi);
+    end
+end
+
 if sys_info.ode_order == 1   
-  if strcmp(sys_info.name, 'OpinionDynamicsDisc')
-      x = mod(x, 2*pi);  % hard-code moduli, if something is traveling in a connected manifold
-  end
   rhs                   = find_collective_change(x, v, xi, pdist_mat, sys_info, 'energy');          % for 1st order system: \dot{x}_i = \sum_{i' = 1}^N \phi^E_{K_i, K_i'}(|x_i - x_i'|)(x_i' - x_i)
 elseif sys_info.ode_order == 2
   rhs                   = zeros(size(y));                                                           % 2nd order contains update to x, v (and possibly xi)

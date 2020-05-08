@@ -5,7 +5,7 @@ function Example = LennardJonesDynamics_def()
 % System
 sys_info.name           = 'LennardJonesDynamics';
 sys_info.d              = 2;                                                                        % the dimension for the opinion (state) vecor
-sys_info.N              = 7;                                                                        % the number of agents
+sys_info.N              = 5;                                                                        % the number of agents
 epsilon                 = 10;                                                                       % depth of the potential well
 r_m                     = 1;                                                                        % distance at which the potential reaches its mininum
 sys_info.phiE           = {@(r) LJ_influence(r, epsilon, r_m)};                                     % energy based influence
@@ -15,9 +15,9 @@ sys_info.type_info      = ones(1, sys_info.N);                                  
 sys_info.kappa          = 1;                                                                        % coupling strength term
 sys_info.RE             = [];                                                                       % regulation on collective influence on x
 sys_info.has_noise      = false;                                                                    % no stochastic noise
-sys_info.mu0            = @() LJ_init_config([], sys_info.d, sys_info.N, 1);                        % distribution of initial conditions, distribution kind = 1
-sys_info.T_f            = 0.5; 
-% the time for integration, t = T_f should be (most likely) for the system to reach steady state
+sys_info.mu0            = @() LJ_init_config([0, 2*pi, 0, pi], sys_info.d, sys_info.N, 1);                        % distribution of initial conditions, distribution kind = 1
+sys_info.T_f            = 0.5;                                                                      % the time for integration, t = T_f should be (most likely) for the system to reach steady state
+sys_info.radius         = 1;
 
 % ODE solver
 solver_info.time_span   = [0, sys_info.T_f];                                                        % put it into the time_span vector, always starting from 0

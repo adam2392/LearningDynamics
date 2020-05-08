@@ -60,16 +60,18 @@ fprintf('\n  sup-norm on [%10.4e,%10.4e] = %10.4e.', obs_info.time_vec(1), obs_i
 fprintf('\n  sup-norm on [%10.4e,%10.4e] = %10.4e.', obs_info.T_L,         plot_info.solver_info.time_span(2), result.trajErrfut);
 
 
-% comment out if not doing simulation on circular manifold
+%% comment out if not doing simulation on circular manifold
 RADIUS = sys_info.radius;
 sys_info.d = 2;  % convert system dimension to 2 - hack
 % loop through all trajs
 for ind = 1 : length(trajs)
   this_traj = trajs{ind};
+  
+  sys_info.N = 4;
   cartesian_traj = zeros(sys_info.N*2, size(this_traj, 2));
   
   prev_ind = 0;
-  for agent = 1 : size(this_traj, 1)
+  for agent = 1 : sys_info.N % size(this_traj, 1)
     thetas = this_traj(agent, :);
     cartesian_traj(agent + prev_ind,:) = RADIUS * cos(thetas);
     cartesian_traj(agent * 2,:) = RADIUS * sin(thetas);
@@ -78,7 +80,7 @@ for ind = 1 : length(trajs)
   trajs{ind} = cartesian_traj;
 end
 
-% put the trajectories on one single window for comparison
+%% put the trajectories on one single window for comparison
 switch sys_info.d
   case 1
     visualize_traj_1D(trajs, time_vec, sys_info, obs_info, plot_info);
