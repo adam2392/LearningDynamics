@@ -45,17 +45,17 @@ block_size              = sys_info.d * sys_info.N;                              
 
 for l = 1 : L                                                                                       % start the paritoining by going through time
   x_at_t            = reshape(traj(1 : block_size, l), [sys_info.d, sys_info.N]);                   % find out the x_i's at time t_l
-  % pdist_x_at_t      = sqrt(sqdist_mod(x_at_t, x_at_t));                                             % calculate |x_i - x_i'|, using the MM routine sqdist_mod to avoid excessive transposes
+%   pdist_x_at_t      = sqrt(sqdist_mod(x_at_t, x_at_t));                                             % calculate |x_i - x_i'|, using the MM routine sqdist_mod to avoid excessive transposes
   pdist_x_at_t      = arclength_mod(x_at_t, x_at_t);                                                % calculate arclength(x_i - x_i'), using the arclength_mod routine
   
   if has_align
     v_at_t          = reshape(traj((block_size + 1) : (2 * block_size), l), [sys_info.d, sys_info.N]);% find out the v_i's at time t_l
-    % pdist_v_at_t    = sqrt(sqdist_mod(v_at_t, v_at_t));                                              % calculate |v_i - v_i'|
+%     pdist_v_at_t    = sqrt(sqdist_mod(v_at_t, v_at_t));                                              % calculate |v_i - v_i'|
     pdist_v_at_t    = arclength_mod(v_at_t, v_at_t);                                                % calculate |v_i - v_i'|
   end
   if has_xi
     xi_at_t         = reshape(traj((2 * block_size + 1) : (2 * block_size + sys_info.N)), [1, sys_info.N]); % find out xi_i's at time t_l
-    % pdist_xi_at_t   = sqrt(sqdist_mod(xi_at_t, xi_at_t));                                           % calculate |xi_i - xi_i'|
+%     pdist_xi_at_t   = sqrt(sqdist_mod(xi_at_t, xi_at_t));                                           % calculate |xi_i - xi_i'|
     pdist_xi_at_t   = arclength_mod(xi_at_t, xi_at_t);                                                 % calculate |xi_i - xi_i'|
   end
   for k_1 = 1 : sys_info.K                                                                          % go through each (k1, k2) pair to partition the data

@@ -3,6 +3,10 @@
 %
 % (c) M. Maggioni, M. Zhong (JHU)
 
+close all
+clear
+clc
+
 %% Set parameters
 if ispc, SAVE_DIR = [getenv('USERPROFILE'), '\DataAnalyses\LearningDynamics']; else, SAVE_DIR = [getenv('HOME'), '/DataAnalyses/LearningDynamics']; end % Please keep this fixed, simply create a symlink ~/DataAnalyses pointing wherever you like                           
 VERBOSE                         = 1;                                                                % indicator to print certain output
@@ -92,8 +96,8 @@ fprintf('\n------------------- Trajectory Error with trial ID#: ');
 for k = n_trials:-1:1
   learningOutput{k}.Timings.estimateTrajAccuracies = tic;
   [learningOutput{k}.trajErr,learningOutput{k}.trajErr_new, learningOutput{k}.y_init_new, learningOutput{k}.trajErr_Ntransfer, ...
-  learningOutput{k}.y_init_Ntransfer, learningOutput{k}.syshatsmooth_info_Ntransfer] = ...
-  estimateTrajAccuracies(sys_info, learningOutput{k}.syshatsmooth_info, learningOutput{k}.obs_data, obs_info, solver_info, sys_info_Ntransfer); % Testing performance on trajectories
+    learningOutput{k}.y_init_Ntransfer, learningOutput{k}.syshatsmooth_info_Ntransfer] = ...
+    estimateTrajAccuracies(sys_info, learningOutput{k}.syshatsmooth_info, learningOutput{k}.obs_data, obs_info, solver_info, sys_info_Ntransfer); % Testing performance on trajectories
   learningOutput{k}.Timings.estimateTrajAccuracies = toc( learningOutput{k}.Timings.estimateTrajAccuracies );
   msg                                              = sprintf('%3d', k);
   fprintf([rStr, msg]);

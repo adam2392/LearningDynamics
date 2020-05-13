@@ -4,8 +4,8 @@ function Example = OpinionDynamicsDisc_def()
 
 % System
 sys_info.name           = 'OpinionDynamicsDisc';                                                    % name of the dynamics
-sys_info.d              = 2;                                                                        % dimension for the state vector (in this case, opinion vector)
-sys_info.N              = 5;                                                                       % # of agents
+sys_info.d              = 1;                                                                        % dimension for the state vector (in this case, opinion vector)
+sys_info.N              = 10;                                                                       % # of agents
 sys_info.phiE           = {@(r) OD_influence(r, 1)};                                                % energy based interaction
 sys_info.K              = 1;                                                                        % # of types
 sys_info.ode_order      = 1;                                                                        % order of the ODE system
@@ -13,7 +13,7 @@ sys_info.type_info      = ones(1, sys_info.N);                                  
 sys_info.kappa          = 1;                                                                        % coupling strength term
 sys_info.RE             = [];                                                                       % energy based reulation on interactoin beween agent i and agent i'
 sys_info.has_noise      = false;                                                                    % no stochastic noise
-sys_info.mu0            = @() OD_init_config(sys_info.d, sys_info.N, 2);                            % distribution of initial conditions
+sys_info.mu0            = @() OD_init_config(sys_info.d, sys_info.N, 1);                            % distribution of initial conditions
 sys_info.T_f            = 20;                                                                       % final time the system will reach steady state
 sys_info.radius         = 1;
 
@@ -21,7 +21,7 @@ sys_info.radius         = 1;
 solver_info.time_span   = [0, sys_info.T_f];                                                        % put it into the time_span vector, always starting from 0
 
 % Observations
-obs_info.L              = 200;                                                                      % observe (equi-spaced) times
+obs_info.L              = 100;                                                                      % observe (equi-spaced) times
 obs_info.M              = 50;                                                                       % # trajectories with random initial conditions for learning interaction kernel
 obs_info.M_rhoT         = 2000;                                                                     % # trajectories with random initial conditions to compute approximate \rho^L_T
 obs_info.T_L            = sys_info.T_f/2;                                                           % Observations will be up to this time

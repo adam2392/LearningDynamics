@@ -62,22 +62,54 @@ fprintf('\n  sup-norm on [%10.4e,%10.4e] = %10.4e.', obs_info.T_L,         plot_
 
 %% comment out if not doing simulation on circular manifold
 RADIUS = sys_info.radius;
-sys_info.d = 2;  % convert system dimension to 2 - hack
-% loop through all trajs
-for ind = 1 : length(trajs)
-  this_traj = trajs{ind};
-  
-  sys_info.N = 4;
-  cartesian_traj = zeros(sys_info.N*2, size(this_traj, 2));
-  
-  prev_ind = 0;
-  for agent = 1 : sys_info.N % size(this_traj, 1)
-    thetas = this_traj(agent, :);
-    cartesian_traj(agent + prev_ind,:) = RADIUS * cos(thetas);
-    cartesian_traj(agent * 2,:) = RADIUS * sin(thetas);
-    prev_ind = prev_ind + 1;
-  end
-  trajs{ind} = cartesian_traj;
+if sys_info.radius ~= -1
+    if sys_info.d == 1
+        sys_info.d = 2;  % convert system dimension to 2 - hack
+        % loop through all trajs
+        for ind = 1 : length(trajs)
+          this_traj = trajs{ind};
+
+          sys_info.N = 3;
+          cartesian_traj = zeros(sys_info.N*2, size(this_traj, 2));
+
+          prev_ind = 0;
+          for agent = 1 : sys_info.N % size(this_traj, 1)
+            thetas = this_traj(agent, :);
+            cartesian_traj(agent + prev_ind,:) = RADIUS * cos(thetas);
+            cartesian_traj(agent * 2,:) = RADIUS * sin(thetas);
+            prev_ind = prev_ind + 1;
+          end
+          trajs{ind} = cartesian_traj;
+        end
+    elseif sys_info == 2
+        sys_info.d = 3;  % convert system dimension to 2 - hack
+        % loop through all trajs
+        for ind = 1 : length(trajs)
+          this_traj = trajs{ind};
+
+          sys_info.N = 4;
+          cartesian_traj = zeros(sys_info.N/2*3, size(this_traj, 2));
+
+          curr_ind = 1;
+          prev_ind = 0;
+          for agent = 1 : sys_info.N % size(this_traj, 1)
+            % get spherical coordinates
+            thetas = this_traj(agent, :);
+            psis = this_traj(agent+prev_ind, :);
+            
+            % fill in xyz cartesian coordinates
+            cartesian_traj(curr_ind,:) = RADIUS * sin(psis) * cos(thetas);
+            curr_ind = curr_ind + 1;
+            cartesian_traj(curr_ind,:) = RADIUS * sin(psis) * sin(thetas);
+            curr_ind = curr_ind + 1;
+            cartesian_traj(curr_ind,:) = RADIUS * cos(psis);
+            curr_ind = curr_ind + 1;
+            
+            prev_ind = prev_ind + 1;  % increment to count over agents
+          end
+          trajs{ind} = cartesian_traj;
+        end
+    end
 end
 
 %% put the trajectories on one single window for comparison

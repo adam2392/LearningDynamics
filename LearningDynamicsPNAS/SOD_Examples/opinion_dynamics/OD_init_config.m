@@ -14,8 +14,8 @@ switch kind
     % y_init = uniform_dist(d, N, 'line', [0, 10]);
     
     % generate IC on circle between  0 and 360 degreees
-    y_init = uniform_dist(d, N, 'line', [0, pi/2]);
-    
+    y_init = uniform_dist(d, N, 'line', [0, 2*pi]);
+%     y_init = [0, pi];
   % the 2D case
   case 2
     if d ~= 2

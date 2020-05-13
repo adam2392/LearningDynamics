@@ -15,8 +15,13 @@ if isfield(sys_info, 'has_theta') && sys_info.has_theta
 else
   theta_mat       = [];
 end
+% original phis (just distance measure)
 phis_of_pdist     = find_phis_of_pdist(pdist_mat, theta_mat, sys_info, type);                       % construct the phi_of_pdist matirx, first order it is energy based
 phis_of_pdist     = add_regulation(x, v, xi, phis_of_pdist, sys_info, type);                        % add regulation to the dynamics
+
+% get phis for long range 
+% phis_of_long_pdist     = find_phis_of_pdist(long_pdist_mat, theta_mat, sys_info, type);                       % construct the phi_of_pdist matirx, first order it is energy based
+% phis_of_long_pdist     = add_regulation(x, v, xi, phis_of_long_pdist, sys_info, type);                        % add regulation to the dynamics
 
 % prepare pairwise differences
 switch type
@@ -33,5 +38,9 @@ end
 % pointwise multiplication of kappa_{K_i'}/N_i' * \phi_{K_i, K_i'}(|x_i - x_i'|) * pdiff_ii'
 agent_change      = phis_of_pdist .* the_pdiff;                                                     % for each agent, it is kappa_{K_i'}/N_i' * \phi_{K_i, K_i'}(|x_i - x_i'|) * pdiff_ii'
 collective_change = sum(agent_change, 2);                                                           % the class influence for agent i is: \sum_{i' \in K_i'} kappa_{K_i'}/N_i' * \phi_{K_i, K_i'}(|x_i - x_i'|) * pdiff_ii'
+
+% long-range agent change
+% long_agent_change = phis_of_long_pdist .* the_pdiff;
+% collective_change = collective_change + sum(long_agent_change, 2);
 
 return

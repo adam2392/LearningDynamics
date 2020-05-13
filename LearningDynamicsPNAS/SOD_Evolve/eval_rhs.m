@@ -13,20 +13,8 @@ function rhs = eval_rhs(y, sys_info)
 % prepare x, v, xi and pdist_mat (contains the pairwise distance, |x_i - x_i'|
 state_vars                         = partition_sys_var(y, sys_info);
 x                                  = state_vars.x;
-
-% modifying x to account for movement across ends of circle at 0 and 2*pi
-for i = find(x >= 2*pi)
-  x(i)                  = mod(x(i), 2*pi);
-end
-for i = find(x < 0)
-  x(i)                  = 2*pi + x(i);
-end
-
 v                                  = state_vars.v;
 xi                                 = state_vars.xi;
-% pdist_mat                          = sqrt(abs(sqdist_mod(x)));                                      % calculate the pairwise distance (using normal Euclidean distance)
-pdist_mat                          = arclength_mod(x);
-% evaluate f(t, y) based on the order of the ODE
 
 % if we are using a radius-based spherical manifold
 if sys_info.radius ~= -1
@@ -37,6 +25,20 @@ if sys_info.radius ~= -1
         x(2:2:end) = mod(x(2:2:end), pi);
     end
 end
+% modifying x to account for movement across ends of circle at 0 and 2*pi
+% for i = find(x >= 2*pi)
+%   x(i)                  = mod(x(i), 2*pi);
+% end
+% for i = find(x < 0)
+%   x(i)                  = 2*pi + x(i);
+% end
+
+% pdist_mat                          = sqrt(abs(sqdist_mod(x)));                                      % calculate the pairwise distance (using normal Euclidean distance)
+pdist_mat                          = arclength_mod(x);
+% long_pdist_mat = [];
+% pdist_mat = arclength_mod(x); %, [], false);
+% long_pdist_mat = arclength_mod(x, true);
+% evaluate f(t, y) based on the order of the ODE
 
 if sys_info.ode_order == 1   
   rhs                   = find_collective_change(x, v, xi, pdist_mat, sys_info, 'energy');          % for 1st order system: \dot{x}_i = \sum_{i' = 1}^N \phi^E_{K_i, K_i'}(|x_i - x_i'|)(x_i' - x_i)

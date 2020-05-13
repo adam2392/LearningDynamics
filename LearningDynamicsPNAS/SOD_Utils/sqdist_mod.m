@@ -5,9 +5,6 @@ function m = sqdist_mod(p, q, A)
 
 % Written by Tom Minka, small modifications by Mauro Maggioni
 
-% hard-code radius
-RADIUS = 1;
-
 % get dimensionality and number of samples
 [d, pn] = size(p);
 

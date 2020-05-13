@@ -14,9 +14,17 @@ function influence = OD_influence(r, type)
 % support   = 1;
 
 % interaction kernel on a circle
-influence = zeros(size(r));
-cutoff = pi/3;
-second_cutoff = pi*5/6;
+influence = ones(size(r))*0.5;
+% influence = zeros(size(r));
+
+% exp 1
+cutoff = pi/2;
+second_cutoff = pi/sqrt(2);
+
+% exp 2
+% cutoff = pi/6;
+% second_cutoff = pi*5/6;
+
 support = 2*pi;
 
 switch type
